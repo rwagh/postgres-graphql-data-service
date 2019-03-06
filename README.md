@@ -1,5 +1,4 @@
-# PGRM
-PostgreSQL GraphQL Relational Mapping<br>
+# Postgres GraphQL Data Service
 Objective of building this is to deploy-and-forget.
 
 ### Setup
