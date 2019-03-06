@@ -8,7 +8,7 @@ Change the configuration to connect database in .env file
   <thead>
     <tr>
       <th>Key</th>
-      <th>Value<th>
+      <th>Value</th>
       <th>Comments</th>
     </tr>
   </thead>
