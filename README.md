@@ -8,8 +8,7 @@ Objective of building this is to deploy-and-forget.
   <li>run command npm i/install </li>
   <li>Configure database connection in .env file as per instruction in the <b>Configuration</b> section</li>
   <li>run command npm start</li>
-<ul>
-
+</ul>
 
 ### Configuration
 Change the configuration to connect database in .env file
