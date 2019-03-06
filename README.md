@@ -73,7 +73,7 @@ Change the configuration to connect database in .env file
         PG_DB_PASS
       </td>
       <td>
-        /pgrm
+        test1234
       </td>
       <td>
         Database Password can be changed
