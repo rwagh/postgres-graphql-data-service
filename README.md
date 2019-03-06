@@ -2,6 +2,15 @@
 Postgres GraphQL Relational Mapping<br>
 Objective of building this is to deploy-and-forget.
 
+### Setup
+<ul>
+  <li>Download Zip/Clone</li>
+  <li>run command npm i/install </li>
+  <li>Configure database connection in .env file as per instruction in the <b>Configuration</b> section</li>
+  <li>run command npm start</li>
+<ul>
+
+
 ### Configuration
 Change the configuration to connect database in .env file
 <table>
