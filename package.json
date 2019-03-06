@@ -1,7 +1,7 @@
 {
-  "name": "dynamic-graphql-data-service",
+  "name": "postgres-graphql-data-service",
   "version": "1.0.0",
-  "description": "Dynamic GraphQL Data Service",
+  "description": "Postgres GraphQL Data Service",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
