@@ -73,7 +73,7 @@ Change the configuration to connect database in .env file
         PG_DB_PASS
       </td>
       <td>
-        postgres123
+        <strike>postgres123</strike>
       </td>
       <td>
         Database Password can be changed
@@ -84,7 +84,7 @@ Change the configuration to connect database in .env file
         PG_DB_NAME
       </td>
       <td>
-        <strike>postgres</strike>
+        postgres
       </td>
       <td>
         Database Name can be changed
