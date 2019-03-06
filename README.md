@@ -22,7 +22,7 @@ Change the configuration to connect database in .env file
       </td>
       <td>
         Port can be changed
-      <td>
+      </td>
     </tr>
     <tr>
       <td>
@@ -33,7 +33,7 @@ Change the configuration to connect database in .env file
       </td>
       <td>
         Endpoint can be changed
-      <td>
+      </td>
     </tr>
   </tbody>
 </table>
