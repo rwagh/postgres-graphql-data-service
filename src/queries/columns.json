@@ -1,0 +1,3 @@
+{
+    "query": "SELECT table_name as table, column_name as name, data_type as type, character_octet_length length, is_nullable nullable FROM information_schema.columns WHERE table_schema ='public' AND table_name IN(@@table)"
+}

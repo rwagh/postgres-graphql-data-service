@@ -1,0 +1,225 @@
+scalar Object
+scalar JSON
+type Query {
+    tables: [Table]
+    columns(table: String): [Column]    
+    select(input:Select): Result
+    count(input:Count): Int
+    min(input:Min): Int
+    max(input:Max): Int
+    sum(input:Sum): Int
+    avg(input:Avg): Int
+}
+
+type Mutation {
+    insert(input:Insert): Int
+    update(input:Update): Result
+    delete(input:Criteria): Int
+    simple(input:Simple):[SimpleOutput]
+    complex(input:Complex):Int
+}
+type Table {
+    name:String
+}
+type SimpleOutput {    
+    table: String  
+    content: Object
+    type: String  
+}
+type Column {
+    name: String
+    type: String
+    length: Int
+    nullable: String
+    value: Object
+}
+
+input Select {
+    columns: [Entity]!
+    joins:[Join]
+    criteria: [Criteria]
+    orderBy: [Order]
+    """Divides the rows returned from the select into groups"""
+    grpupBy: [String]
+    """offset says to skip that many rows. offset 0 is the same as omitting the offset."""
+    offset: Int
+    """limit says that many rows will be returned"""
+    limit: Int
+}
+
+input SelectColumn {
+    name: String!
+    alias: String
+}
+input Entity {
+    table: String!
+    columns: [SelectColumn]!
+}
+
+input Join {
+    type: Type!
+    from: Reference!
+    to: Reference!
+}
+
+enum Type {
+    """Cross Join"""
+    CROSS
+    """Inner Join"""
+    INNER
+    """Left Outer Join"""
+    LEFT_OUTER
+    """Right Outer Join"""
+    RIGHT_OUTER
+    """Full Outer Join"""
+    FULL_OUTER
+}
+
+input Reference {
+    table: String!
+    column: String!
+}
+
+input Criteria {
+    table:String
+    column: String!
+    """Comparision Operator"""
+    cop: COP!
+    """Logical Operator"""
+    lop: LOP
+    value: Object!
+}
+
+input Order {
+    column:String!
+    asc:Boolean!
+}
+
+type Result {
+    rows:[Object]
+    count: Int
+}
+
+input Delete {
+    table: String!
+    criteria:[Criteria]
+}
+
+input Field {
+    name:String!
+    value: Object!
+}
+input Update {
+    table: String!
+    columns: [String]!
+    values: [Object]!
+    criteria: [Criteria!]
+}
+input Value {
+    integer: Int
+    float: Float
+    string: String
+    select: Select
+}
+input Insert {
+    table: String!
+    columns: [String]!
+    values: [Object]!   
+}
+input Parent {
+    insert:Insert
+    update:Update
+    delete:Delete
+}
+
+input Child {
+    insert:Insert
+    update:Update
+    delete:Delete
+}
+
+""" Simple Database Transaction"""
+input Simple {
+    insert:[Insert]
+    update:[Update]
+    delete:[Delete]
+}
+
+""" Simple Database Transaction"""
+input Complex {
+    insert:Insert
+    update:Update
+    delete:Delete    
+    complex:[Complex]
+}
+
+input Count {
+    """Table name"""
+    table: String!    
+    """Count filter criteria"""
+    criteria: [Criteria]    
+}
+
+input Min {
+    """Table name"""
+    table: String!
+    """Column name from the speciried table"""
+    column: String!
+    """Count filter criteria"""
+    criteria: [Criteria]    
+}
+
+input Max {
+    """Table name"""
+    table: String!
+    """Column name from the speciried table"""
+    column: String!
+    """Count filter criteria"""
+    criteria: [Criteria]    
+}
+
+input Sum {
+    """Table name"""
+    table: String!
+    """Column name from the speciried table"""
+    column: String!
+    """Count filter criteria"""
+    criteria: [Criteria]    
+}
+
+input Avg {
+    """Table name"""
+    table: String!
+    """Column name from the speciried table"""
+    column: String!
+    """Count filter criteria"""
+    criteria: [Criteria]    
+}
+
+"""Comparision Operator Enum"""
+enum COP {   
+    """Equals """
+   eq
+   """Not Equals """
+   ne
+   """Greater Than """
+   gt
+   """Less Than """
+   lt
+   """Greater Than Equals """
+   ge
+   """Less Than Equals """
+   le
+   """In """
+   in
+   """Not In """
+   ni
+   """Like with ignore case"""
+   like
+}
+"""Logical Operator Enum"""
+enum LOP {
+    AND
+    OR
+}
+
