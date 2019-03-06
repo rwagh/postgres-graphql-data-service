@@ -35,15 +35,60 @@ Change the configuration to connect database in .env file
         Endpoint can be changed
       </td>
     </tr>
+    <tr>
+      <td>
+        PG_DB_HOST
+      </td>
+      <td>
+        127.0.0.1
+      </td>
+      <td>
+        Database host can be changed
+      </td>
+    </tr>
+    <tr>
+      <td>
+        PG_DB_PORT
+      </td>
+      <td>
+        5432
+      </td>
+      <td>
+        Database port can be changed
+      </td>
+    </tr>
+    <tr>
+      <td>
+        PG_DB_USER
+      </td>
+      <td>
+        postgres
+      </td>
+      <td>
+        Database Username can be changed
+      </td>
+    </tr>
+    <tr>
+      <td>
+        PG_DB_PASS
+      </td>
+      <td>
+        /pgrm
+      </td>
+      <td>
+        Database Password can be changed
+      </td>
+    </tr>
+    <tr>
+      <td>
+        PG_DB_NAME
+      </td>
+      <td>
+        postgres
+      </td>
+      <td>
+        Database Name can be changed
+      </td>
+    </tr>
   </tbody>
 </table>
-PG_DB_HOST = 127.0.0.1
-##### Change the database host here
-PG_DB_PORT = 5432
-##### Change the database port here
-PG_DB_USER = postgres
-##### Change the database user of your database
-PG_DB_PASS = postgres123
-##### Change the database password here
-PG_DB_NAME = postgres
-##### Change the database name here
