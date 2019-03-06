@@ -1,2 +1,2 @@
-# pgrm
+# PGRM
 Postgres GraphQL Relational Mapping
