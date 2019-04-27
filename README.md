@@ -109,7 +109,7 @@ Change the configuration to connect database in .env file
   <li>distinct</li>
   <li>avg</li>
   <li>count</li>
-  <li>man</li>
+  <li>max</li>
   <li>min</li>
   <li>sum</li>
 </ol>
