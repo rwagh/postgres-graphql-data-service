@@ -102,27 +102,27 @@ Change the configuration to connect database in .env file
 
 ### Queries
 <ol>
-  <li>tables<li>
-  <li>columns<li>
-  <li>foreignkeys<li>
-  <li>select<li>
-  <li>distinct<li>
-  <li>avg<li>
-  <li>count<li>
-  <li>man<li>
-  <li>min<li>
-  <li>sum<li>
+  <li>tables</li>
+  <li>columns</li>
+  <li>foreignkeys</li>
+  <li>select</li>
+  <li>distinct</li>
+  <li>avg</li>
+  <li>count</li>
+  <li>man</li>
+  <li>min</li>
+  <li>sum</li>
 </ol>
 
 ### Mutation
 <ol>
-  <li>insert<li>
-  <li>update<li>
-  <li>delete<li>
-  <li>simple - database transaction<li>
+  <li>insert</li>
+  <li>update</li>
+  <li>delete</li>
+  <li>simple - database transaction</li>
 </ol>
 
 ### Issues Fixed
 <ol>
-  <li>SQL Injection<li>
+  <li>SQL Injection</li>
 </ol>
