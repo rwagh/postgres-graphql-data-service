@@ -1,7 +1,4 @@
-const table_columns = require('../queries/columns.json');
-const Data = require('./Data');
-
-class Select {
+class Distinct {
     valueType(value) {
         return (typeof value);
     }
@@ -66,9 +63,9 @@ class Select {
             return Error("Column(s) not provided!");
         }
         if (join_list.length > 0) {
-            query = `SELECT ${column_list.join(",")} FROM ${join_list.join(" ")}`;
+            query = `SELECT DISTINCT ${column_list.join(",")} FROM ${join_list.join(" ")}`;
         } else {
-            query = `SELECT ${column_list.join(",")} FROM ${table_list.join(",")}`;
+            query = `SELECT DISTINCT ${column_list.join(",")} FROM ${table_list.join(",")}`;
         }
 
         query += this.where(args.input.criteria);
@@ -132,7 +129,6 @@ class Select {
         }
     }
     andOr(op, lop, table, name, value) {
-        var clause = "";
         if (table) {
             if (lop == "AND") {
                 return ` AND ${table}.${name} ${this.cop(op)} ${value}`;
@@ -241,4 +237,4 @@ class Select {
         return clause;
     }
 }
-module.exports = new Select();
+module.exports = new Distinct();

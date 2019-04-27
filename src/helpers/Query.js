@@ -1,10 +1,7 @@
 const tables = require('../queries/tables.json');
 const columns = require('../queries/columns.json');
 const Data = require('./Data');
-const Select = require('./Select');
-const Insert = require('./Insert');
-const Update = require('./Update');
-const Delete = require('./Delete');
+
 class Query {
     constructor() {
         this.Select = new Select();
@@ -14,12 +11,17 @@ class Query {
         this.table_query = tables.query;
         this.column_query = columns.query;
     }
-    
-    async execute(queries) {        
-        console.log(queries);
-        return await Data.executeTransation(queries);
+    // Execute simple transaction
+    async simple(queries) {        
+        return await Data.simple(queries);
     }
 
+    // Execute complex transaction
+    async complex(args, info) {
+        console.log(args, info);
+        return await Data.complex(queries);
+    }
+    
     build(args){
         var inserts = args.input.insert;
         var updates = args.input.update;
@@ -49,7 +51,7 @@ class Query {
                 }
                 queries.push({ table: item.table, query: this.Delete.build(args)});
             });
-        }        
+        }
         return queries;
     }
 

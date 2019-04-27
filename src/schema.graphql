@@ -1,67 +1,133 @@
 scalar Object
 scalar JSON
 type Query {
-    tables: [Table]
-    columns(table: String): [Column]    
-    select(input:Select): Result
+    """Gets the list of tables exist in the configured database"""
+    tables: [String]
+    """Gets the list of columns of a specified table as input and returns name, type, length and nullable for each column in the list"""
+    columns("""Table Name""" table: String): [Field]
+    """Gets the list of foreign keys defined for the specified table as input and it returns table_name, constraint_type, column_name, foreign_table_name, and foreign_column_name """
+    foreignkeys("""Table Name""" table: String):[ForeignKey]
+    """Gets the list of rows for the specified input from the database"""
+    select("""Input as JSON Object""" input:Select): Result
+     """Gets the list of distinct rows for the specified input from the database"""
+    distinct("""Input as JSON Object""" input:Distinct): Result
+    """Gets the number of rows from the specified table and or criteria"""
     count(input:Count): Int
+    """Gets the minimum value for the specified table, column and or criteria"""
     min(input:Min): Int
+    """Gets the maximum value for the specified table, column and or criteria"""
     max(input:Max): Int
+    """Gets the total value for the specified table, column and or criteria"""
     sum(input:Sum): Int
-    avg(input:Avg): Int
+    """Gets the average value for the specified table, column and or criteria"""
+    avg(input:Avg): Float
 }
 
 type Mutation {
-    insert(input:Insert): Int
-    update(input:Update): Result
-    delete(input:Criteria): Int
+    """Insert data into specified table"""
+    insert("""Input parameters to insert data""" input:Insert): Int
+    """Update data of specified table and criteria"""
+    update("""Input parameters to update data""" input:Update): [Int]
+    """Delete data from specified table and criteria"""
+    delete("""Input parameters to delete data""" input:Delete): Int
+    """Execute simple database transaction"""
     simple(input:Simple):[SimpleOutput]
-    complex(input:Complex):Int
+    """Execute complex database transaction which is based on parent DML statment"""
+    complex(input:Complex):[ComplexOutput]
 }
-type Table {
-    name:String
+
+type ForeignKey {
+    table_name: String
+    constraint_type: String
+    column_name: String
+    foreign_table_name: String
+    foreign_column_name: String
+}
+
+
+input Table {
+    """Table Name"""
+    name:String,
+    """Columns as JSON array"""
+    columns:[Column]
 }
 type SimpleOutput {    
     table: String  
     content: Object
     type: String  
 }
-type Column {
+type ComplexOutput {    
+    table: String  
+    content: Object
+    type: String  
+}
+type Field {
     name: String
     type: String
     length: Int
     nullable: String
-    value: Object
 }
 
 input Select {
-    columns: [Entity]!
+    """Table as JSON array"""
+    tables: [Table]!
+    """JOINS are nothing but the relations between tables"""
     joins:[Join]
+    """Criteria is nothing but the where clause for SQL Databases like Postgres, MSSQL Server"""
     criteria: [Criteria]
+    """Orders the rows return from the select into specific order"""
     orderBy: [Order]
     """Divides the rows returned from the select into groups"""
-    grpupBy: [String]
+    groupBy: [Group]
     """offset says to skip that many rows. offset 0 is the same as omitting the offset."""
     offset: Int
     """limit says that many rows will be returned"""
     limit: Int
 }
 
-input SelectColumn {
+input Distinct {
+    """Table as JSON array"""
+    tables: [Table]!
+    """JOINS are nothing but the relations between tables"""
+    joins:[Join]
+    """Criteria is nothing but the where clause for SQL Databases like Postgres, MSSQL Server"""
+    criteria: [Criteria]
+    """Orders the rows return from the select into specific order"""
+    orderBy: [Order]
+    """Divides the rows returned from the select into groups"""
+    groupBy: [Group]
+    """offset says to skip that many rows. offset 0 is the same as omitting the offset."""
+    offset: Int
+    """limit says that many rows will be returned"""
+    limit: Int
+}
+
+enum Functions {
+    AVG
+    COUNT
+    MIN
+    MAX
+    SUM    
+}
+
+input Column {
+    """Column Name"""
     name: String!
+    """Column Function"""
+    function:Functions
+    """Column Alias"""
     alias: String
 }
-input Entity {
-    table: String!
-    columns: [SelectColumn]!
+
+input Join {   
+    from: ReferenceFrom!
+    to: [ReferenceTo]!
 }
 
-input Join {
-    type: Type!
-    from: Reference!
-    to: Reference!
+input Group {
+    table:String
+    column:String
 }
-
 enum Type {
     """Cross Join"""
     CROSS
@@ -75,82 +141,116 @@ enum Type {
     FULL_OUTER
 }
 
-input Reference {
+input ReferenceFrom {
+    """Table Name"""
     table: String!
+    """Column Name"""
+    column: String!
+}
+
+input ReferenceTo {
+    """Type of joins like CROSS, INNER, LEFT_OUTER, RIGHT_OUTER, FULL_OUTER """
+    type: Type!
+    """Table Name"""
+    table: String!
+    """Column Name"""
     column: String!
 }
 
 input Criteria {
+    """Table Name"""
     table:String
+    """Column Name"""
     column: String!
     """Comparision Operator"""
     cop: COP!
     """Logical Operator"""
     lop: LOP
+    """Value to send to database to filter"""
     value: Object!
 }
 
 input Order {
+    """Column Name"""
     column:String!
-    asc:Boolean!
+    """Order type ascending or decending, default true"""
+    asc:Boolean! = true
 }
 
 type Result {
+    """Gets the list of rows of specified select query"""
     rows:[Object]
+    """Number of rows of the table"""
     count: Int
 }
 
 input Delete {
+    """Table Name"""
     table: String!
-    criteria:[Criteria]
+    """Criteria to delete rows from the table"""
+    criteria:[DeleteCriteria]
 }
-
-input Field {
-    name:String!
+input DeleteCriteria {    
+    """Column Name"""
+    column: String!
+    """Comparision Operator"""
+    cop: COP!
+    """Logical Operator"""
+    lop: LOP
+    """Value to be used in where clause"""
     value: Object!
 }
+
+##input Field {
+##    name:String!
+##    value: Object!
+##}
+
 input Update {
+    """Table Name"""
     table: String!
+    """Columns from the specified table"""
     columns: [String]!
+    """Values to be updated for the specified columns"""
     values: [Object]!
+    """Criteria is nothing but a where clause to update the row of table"""
     criteria: [Criteria!]
 }
-input Value {
-    integer: Int
-    float: Float
-    string: String
-    select: Select
-}
+##input Value {
+##    integer: Int
+##    float: Float
+##    string: String
+##    select: Select
+##}
 input Insert {
+    """Table Name"""
     table: String!
+    """Columns from the specified table"""
     columns: [String]!
-    values: [Object]!   
-}
-input Parent {
-    insert:Insert
-    update:Update
-    delete:Delete
-}
-
-input Child {
-    insert:Insert
-    update:Update
-    delete:Delete
+    """Values to be inserted in the table"""
+    values: [Object]!
 }
 
 """ Simple Database Transaction"""
 input Simple {
+    """One or more inserts"""
     insert:[Insert]
+    """One or more updates"""
     update:[Update]
+    """One or more deletes"""
     delete:[Delete]
 }
 
 """ Simple Database Transaction"""
 input Complex {
+    """Parent Insert"""
     insert:Insert
+    """Parent Update"""
     update:Update
-    delete:Delete    
-    complex:[Complex]
+    """Parent Delete"""
+    delete:Delete
+    """Child Insert or Update or Delete"""
+    complex:Complex
 }
 
 input Count {
