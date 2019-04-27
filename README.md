@@ -99,3 +99,6 @@ Change the configuration to connect database in .env file
     </tr>
   </tbody>
 </table>
+
+
+### SQL Injection Fixed
