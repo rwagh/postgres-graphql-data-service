@@ -22,24 +22,13 @@ Change the configuration to connect database in .env file
   <tbody>
     <tr>
       <td>
-        SERVICE_PORT
+        PORT
       </td>
       <td>
-        9002
+        80
       </td>
       <td>
         Port can be changed
-      </td>
-    </tr>
-    <tr>
-      <td>
-        SERVICE_ENDPOINT
-      </td>
-      <td>
-        /pgrm
-      </td>
-      <td>
-        Endpoint can be changed
       </td>
     </tr>
     <tr>
